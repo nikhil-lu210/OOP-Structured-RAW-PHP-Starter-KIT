@@ -1,0 +1,15 @@
+{
+    "name": "nigel/oop-php-practice",
+    "autoload": {
+        "psr-4": {
+            "Nigel\\OopPhpPractice\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "nigelsi2023",
+            "email": "nigel.pi@staff-india.com"
+        }
+    ],
+    "require": {}
+}
