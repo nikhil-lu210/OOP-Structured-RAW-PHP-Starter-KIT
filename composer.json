@@ -1,14 +1,17 @@
 {
-    "name": "nigel/oop-php-practice",
+    "name": "nikhil/oop-structured-raw-php-starter-kit",
     "autoload": {
         "psr-4": {
-            "Nigel\\OopPhpPractice\\": "src/"
-        }
+            "App\\": "app/"
+        },
+        "files":[
+            "app/Helper.php"
+        ]
     },
     "authors": [
         {
-            "name": "nigelsi2023",
-            "email": "nigel.pi@staff-india.com"
+            "name": "NIKHIL KURMI",
+            "email": "nikhil.lu210@gmail.com"
         }
     ],
     "require": {}
