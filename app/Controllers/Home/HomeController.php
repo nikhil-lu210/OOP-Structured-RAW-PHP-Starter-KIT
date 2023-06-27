@@ -9,6 +9,7 @@ class HomeController {
 
 
     public function index() {
-        echo 'Hello From Home';
+        // return my_env('APP_NAME');
+        return view('home.index');
     }
 }

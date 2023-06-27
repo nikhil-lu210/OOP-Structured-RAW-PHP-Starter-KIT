@@ -1,14 +1,16 @@
 <?php
 
+use Dotenv\Dotenv;
 use App\Services\Route;
 
-define('APP_ROOT', __DIR__);
+require_once(__DIR__ . '/vendor/autoload.php');
 
-require_once(APP_ROOT . '/vendor/autoload.php');
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 spl_autoload_register(function ($class) {
     $classFile = str_replace("\\", DIRECTORY_SEPARATOR, $class) . '.php';
-    $classPath = APP_ROOT . '/app/' . $classFile;
+    $classPath = __DIR__ . '/app/' . $classFile;
 
     if (file_exists($classPath)) {
         require_once($classPath);
@@ -18,5 +20,5 @@ spl_autoload_register(function ($class) {
 session_start();
 
 $route = new Route();
-require_once(APP_ROOT . '/routes/web.php');
+require_once(__DIR__ . '/routes/web.php');
 $route->handle();
