@@ -45,6 +45,6 @@ class Route
         }
     
         // If no route matches, send a 404 Not Found response
-        echo '404 Not Found';
+        return view('errors.404');
     }    
 }

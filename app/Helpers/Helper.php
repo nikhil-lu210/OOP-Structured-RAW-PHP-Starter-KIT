@@ -3,6 +3,24 @@
 use Jenssegers\Blade\Blade;
 
 /**
+ * Debugging function for displaying variable values and terminating the script execution.
+ *
+ * @param mixed $var The variable to be dumped.
+ * @return void
+ */
+function dd($var): void {
+    $json = json_encode($var, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+
+    echo '<pre style="display: block; background: #F5F5F5; padding: 10px; font-family: consolas, monospace; font-size: 16px; color: #333; overflow: auto; word-wrap: normal; white-space: pre; border-radius: 5px;">';
+    echo '<code style="display: block; white-space: pre; overflow-x: auto; padding: 10px; margin: 0; border: 1px solid #efefef;">' . htmlspecialchars($json, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '</code>';
+    echo '</pre>';
+
+    die();
+}
+
+
+
+/**
  * Retrieve the value of an environment variable.
  *
  * @param string $value The name of the environment variable.
