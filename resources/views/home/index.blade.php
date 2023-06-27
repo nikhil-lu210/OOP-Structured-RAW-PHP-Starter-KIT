@@ -7,6 +7,6 @@
     <title>Nikhil</title>
 </head>
 <body>
-    <h1>Hello From Home Index Blade</h1>
+    <h1>Hello {{ $user->name }}</h1>
 </body>
 </html>

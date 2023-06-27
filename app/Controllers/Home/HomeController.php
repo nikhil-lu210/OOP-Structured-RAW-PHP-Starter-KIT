@@ -9,7 +9,7 @@ class HomeController {
 
 
     public function index() {
-        // return my_env('APP_NAME');
-        return view('home.index');
+        $user = (object) ['name' => 'Nikhil'];
+        return view('home.index', ['user' => $user]);
     }
 }
