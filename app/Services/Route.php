@@ -1,11 +1,13 @@
 <?php
+
 namespace App\Services;
 
-class Route {
+class Route
+{
     private static $routes = [];
-    private static $controllerNamespace = 'App\Controllers\\';
 
-    public static function add($uri, $controller, $action, $method = 'GET', $middleware = []) {
+    public static function get($uri, $controller, $action, $method = 'GET', $middleware = [])
+    {
         self::$routes[] = [
             'method' => $method,
             'uri' => $uri,
@@ -15,20 +17,34 @@ class Route {
         ];
     }
 
-    public static function handle() {
+    public static function post($uri, $controller, $action, $method = 'POST', $middleware = [])
+    {
+        self::$routes[] = [
+            'method' => $method,
+            'uri' => $uri,
+            'controller' => $controller,
+            'action' => $action,
+            'middleware' => $middleware
+        ];
+    }
+
+    public static function handle()
+    {
         $requestURI = $_SERVER['REQUEST_URI'];
         $requestMethod = $_SERVER['REQUEST_METHOD'];
-
+    
         foreach (self::$routes as $route) {
             if ($route['uri'] === $requestURI && $route['method'] == $requestMethod) {
-                $controllerClass = self::$controllerNamespace.$route['controller'];
+                $controllerClass = $route['controller'];
                 $action = $route['action'];
-
+    
                 $controller = new $controllerClass();
                 $controller->$action();
                 return;
             }
-            echo '404 Not Found';
         }
-    }
+    
+        // If no route matches, send a 404 Not Found response
+        echo '404 Not Found';
+    }    
 }

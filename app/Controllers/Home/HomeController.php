@@ -1,7 +1,9 @@
 <?php
 namespace App\Controllers\Home;
 
-class HomeController {
+use App\Controllers\Controller;
+
+class HomeController extends Controller {
     function __construct()
     {
         
@@ -11,5 +13,9 @@ class HomeController {
     public function index() {
         $user = (object) ['name' => 'Nikhil'];
         return view('home.index', ['user' => $user]);
+    }
+
+    public function store() {
+        var_dump($_POST);
     }
 }

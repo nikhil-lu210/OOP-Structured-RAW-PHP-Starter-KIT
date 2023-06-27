@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\Home\HomeController;
 use App\Services\Route;
 
-Route::add('/', 'Home\HomeController', 'index', 'GET');
+Route::get('/', HomeController::class, 'index');
