@@ -3,6 +3,10 @@
 use Dotenv\Dotenv;
 use App\Services\Route;
 
+if (!isset($_SESSION)) {
+    session_start();
+}
+
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $dotenv = Dotenv::createImmutable(__DIR__);
@@ -16,8 +20,6 @@ spl_autoload_register(function ($class) {
         require_once($classPath);
     }
 });
-
-session_start();
 
 $route = new Route();
 require_once(__DIR__ . '/routes/web.php');
