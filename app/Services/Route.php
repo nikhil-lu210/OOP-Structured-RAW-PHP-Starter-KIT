@@ -6,10 +6,15 @@ class Route
 {
     private static $routes = [];
     private static $currentRoute;
+    private static $routeGroup = [
+        'prefix' => '',
+        'as' => '',
+        'middleware' => [],
+    ];
 
     public static function get($uri, $controller, $action, $method = 'GET', $middleware = [])
     {
-        self::$routes[] = [
+        $route = [
             'method' => $method,
             'uri' => $uri,
             'controller' => $controller,
@@ -18,30 +23,44 @@ class Route
             'name' => null,
         ];
 
-        // Set the current route to the newly added route
+        if (!empty(self::$routeGroup['prefix'])) {
+            // If there is an active route group, prepend the group prefix to the URI
+            $prefix = self::$routeGroup['prefix'];
+            $route['uri'] = $prefix . $uri;
+        }
+
+        self::$routes[] = $route;
         self::$currentRoute = &self::$routes[count(self::$routes) - 1];
 
-        // Return the Route object to allow chaining
         return new static();
     }
 
     public static function post($uri, $controller, $action, $method = 'POST', $middleware = [])
     {
-        self::$routes[] = [
+        $route = [
             'method' => $method,
             'uri' => $uri,
             'controller' => $controller,
             'action' => $action,
-            'middleware' => $middleware
+            'middleware' => $middleware,
+            'name' => null,
         ];
+
+        if (!empty(self::$routeGroup['prefix'])) {
+            // If there is an active route group, prepend the group prefix to the URI
+            $prefix = self::$routeGroup['prefix'];
+            $route['uri'] = $prefix . $uri;
+        }
+
+        self::$routes[] = $route;
+        self::$currentRoute = &self::$routes[count(self::$routes) - 1];
+
+        return new static();
     }
 
     public function name($name)
     {
-        // Set the name of the current route
-        self::$currentRoute['name'] = $name;
-
-        // Return the Route object to allow chaining
+        self::$currentRoute['name'] = self::$routeGroup['as'] ? self::$routeGroup['as'] . '.' . $name : $name;
         return $this;
     }
 
@@ -57,6 +76,7 @@ class Route
 
                 $controller = new $controllerClass();
                 $controller->$action();
+
                 return;
             }
         }
@@ -68,5 +88,35 @@ class Route
     public static function getRoutes()
     {
         return self::$routes;
+    }
+
+    public static function prefix($prefix)
+    {
+        self::$routeGroup['prefix'] = $prefix;
+
+        return new static();
+    }
+
+    public static function as($as)
+    {
+        self::$routeGroup['as'] = $as;
+
+        return new static();
+    }
+
+    public static function middleware($middleware)
+    {
+        self::$routeGroup['middleware'] = array_merge(self::$routeGroup['middleware'], (array) $middleware);
+
+        return new static();
+    }
+
+    public static function group(\Closure $callback)
+    {
+        $previousGroup = self::$routeGroup;
+
+        call_user_func($callback);
+
+        self::$routeGroup = $previousGroup;
     }
 }
