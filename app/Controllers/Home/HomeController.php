@@ -7,7 +7,7 @@ use App\Services\Request;
 class HomeController extends Controller {
     public function index() {
         $user = (object) ['name' => 'Nikhil'];
-        return view('home.index', ['user' => $user]);
+        return view('home.index', compact('user'));
     }
 
     // public function show(int $id, string $slug) {
