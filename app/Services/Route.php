@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use Exception;
+use TypeError;
+use ParseError;
 use ReflectionMethod;
 use App\Services\Request;
 
@@ -110,39 +113,52 @@ class Route
         $requestURI = $_SERVER['REQUEST_URI'];
         $requestMethod = $_SERVER['REQUEST_METHOD'];
 
-        foreach (self::$routes as $route) {
-            if ($route['method'] === $requestMethod) {
-                $pattern = '#^' . preg_replace('/{(\w+)}/', '(?P<$1>[^/]+)', $route['uri']) . '$#';
-                if (preg_match($pattern, $requestURI, $matches)) {
-                    $controllerClass = $route['controller'];
-                    $action = $route['action'];
+        
 
-                    $params = array_intersect_key($matches, array_flip(array_filter(array_keys($matches), 'is_string')));
-
-                    $controller = new $controllerClass();
-
-                    $reflectionMethod = new ReflectionMethod($controllerClass, $action);
-                    $parameters = $reflectionMethod->getParameters();
-
-                    $arguments = [];
-
-                    foreach ($parameters as $parameter) {
-                        if ($parameter->getName() === 'request') {
-                            $arguments[] = new Request();
-                        } elseif (array_key_exists($parameter->getName(), $params)) {
-                            $arguments[] = $params[$parameter->getName()];
+        try {
+            foreach (self::$routes as $route) {
+                if ($route['method'] === $requestMethod) {
+                    $pattern = '#^' . preg_replace('/{(\w+)}/', '(?P<$1>[^/]+)', $route['uri']) . '$#';
+                    if (preg_match($pattern, $requestURI, $matches)) {
+                        $controllerClass = $route['controller'];
+                        $action = $route['action'];
+    
+                        $params = array_intersect_key($matches, array_flip(array_filter(array_keys($matches), 'is_string')));
+    
+                        $controller = new $controllerClass();
+    
+                        $reflectionMethod = new ReflectionMethod($controllerClass, $action);
+                        $parameters = $reflectionMethod->getParameters();
+    
+                        $arguments = [];
+    
+                        foreach ($parameters as $parameter) {
+                            if ($parameter->getName() === 'request') {
+                                $arguments[] = new Request();
+                            } elseif (array_key_exists($parameter->getName(), $params)) {
+                                $arguments[] = $params[$parameter->getName()];
+                            }
                         }
+    
+                        $controller->$action(...$arguments);
+    
+                        return;
                     }
-
-                    $controller->$action(...$arguments);
-
-                    return;
                 }
             }
+            // If no route matches, send a 404 Not Found response
+            throw new Exception('Ooops!!! The page you are looking for is not found.', 404);
+        } catch (Exception $error) {
+            // Render the error view
+            $code = $error->getCode();
+            $message = $error->getMessage();
+            return view('errors.error', compact('code', 'message'));
+        } catch (TypeError $e) {
+            // Render the type error view
+            $code = $e->getCode();
+            $message = $e->getMessage();
+            return view('errors.type_error', compact('code', 'message'));
         }
-
-        // If no route matches, send a 404 Not Found response
-        return view('errors.404');
     }
 
     /**
