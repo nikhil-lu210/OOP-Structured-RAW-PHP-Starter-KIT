@@ -9,7 +9,7 @@ class HomeController extends Controller {
         return view('home.index', ['user' => $user]);
     }
 
-    public function show($id) {
-        dd($id);
+    public function show(int $id, string $slug) {
+        dd([$id, $slug]);
     }
 }

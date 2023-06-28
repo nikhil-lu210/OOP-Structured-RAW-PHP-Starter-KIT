@@ -21,6 +21,7 @@ class Route
             'action' => $action,
             'middleware' => $middleware,
             'name' => null,
+            'params' => [],
         ];
 
         if (!empty(self::$routeGroup['prefix'])) {
@@ -44,6 +45,7 @@ class Route
             'action' => $action,
             'middleware' => $middleware,
             'name' => null,
+            'params' => [],
         ];
 
         if (!empty(self::$routeGroup['prefix'])) {
@@ -70,20 +72,26 @@ class Route
         $requestMethod = $_SERVER['REQUEST_METHOD'];
 
         foreach (self::$routes as $route) {
-            if ($route['uri'] === $requestURI && $route['method'] === $requestMethod) {
-                $controllerClass = $route['controller'];
-                $action = $route['action'];
+            if ($route['method'] === $requestMethod) {
+                $pattern = '#^' . preg_replace('/{(\w+)}/', '(?P<$1>[^/]+)', $route['uri']) . '$#';
+                if (preg_match($pattern, $requestURI, $matches)) {
+                    $controllerClass = $route['controller'];
+                    $action = $route['action'];
 
-                $controller = new $controllerClass();
-                $controller->$action();
+                    $params = array_intersect_key($matches, array_flip(array_filter(array_keys($matches), 'is_string')));
 
-                return;
+                    $controller = new $controllerClass();
+                    $controller->$action(...array_values($params));
+
+                    return;
+                }
             }
         }
 
         // If no route matches, send a 404 Not Found response
         return view('errors.404');
     }
+
 
     public static function getRoutes()
     {
