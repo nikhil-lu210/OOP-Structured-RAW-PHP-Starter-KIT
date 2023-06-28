@@ -1,5 +1,6 @@
 <?php
 
+use App\Services\Route;
 use Jenssegers\Blade\Blade;
 
 /**
@@ -29,6 +30,27 @@ function dd($var): void {
 function my_env(string $value): ?string {
     return $_ENV[$value] ?? null;
 }
+
+
+/**
+ * Get the URI associated with the given route name.
+ *
+ * @param  string  $name  The name of the route.
+ * @return string|null  The URI of the route if found, or null if not found.
+ */
+function route(string $name): ?string
+{
+    foreach (Route::getRoutes() as $route) {
+        if (isset($route['name']) && $route['name'] === $name) {
+            return $route['uri'];
+        }
+    }
+    
+    // If no route with the given name is found, return null or handle the error as needed
+    return null;
+}
+
+
 
 
 /**
