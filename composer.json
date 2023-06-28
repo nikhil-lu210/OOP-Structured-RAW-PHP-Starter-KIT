@@ -19,6 +19,7 @@
         "jenssegers/blade": "^1.4"
     },
     "config": {
+        "optimize-autoloader": true,
         "allow-plugins": {
             "kylekatarnls/update-helper": true
         }
