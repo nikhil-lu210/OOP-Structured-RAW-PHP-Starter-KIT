@@ -9,7 +9,7 @@ use Jenssegers\Blade\Blade;
  * @param mixed $var The variable to be dumped.
  * @return void
  */
-function dd($var): void {
+function diedump($var): void {
     $json = json_encode($var, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
     echo '<pre style="display: block; background: #F5F5F5; padding: 10px; font-family: consolas, monospace; font-size: 16px; color: #333; overflow: auto; word-wrap: normal; white-space: pre; border-radius: 5px;">';

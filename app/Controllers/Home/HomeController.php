@@ -7,8 +7,8 @@ use App\Services\Request;
 
 class HomeController extends Controller {
     public function index() {
-        $website = Website::with(['subscribers', 'posts'])->whereId(4)->firstOrFail();
-        dd($website->subscribers);
+        $website = Website::with(['subscribers', 'posts'])->whereId(1)->firstOrFail();
+        dd($website);
         $user = (object) ['name' => 'Nikhil'];
         return view('home.index', compact('user'));
     }

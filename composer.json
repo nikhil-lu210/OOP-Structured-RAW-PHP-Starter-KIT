@@ -17,7 +17,8 @@
     "require": {
         "vlucas/phpdotenv": "^5.5",
         "jenssegers/blade": "^1.4",
-        "illuminate/database": "^8.83"
+        "illuminate/database": "^8.83",
+        "symfony/var-dumper": "^6.3"
     },
     "config": {
         "optimize-autoloader": true,
