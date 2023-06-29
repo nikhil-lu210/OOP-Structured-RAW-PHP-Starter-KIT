@@ -1,31 +1,10 @@
 <?php
 
-use App\Config\Database;
-use Dotenv\Dotenv;
-use App\Services\Route;
+// Include the init.php file
+require_once(__DIR__ . '/bootstrap/init.php');
 
-if (!isset($_SESSION)) {
-    session_start();
-}
-
-require_once(__DIR__ . '/vendor/autoload.php');
-
-$dotenv = Dotenv::createImmutable(__DIR__);
-$dotenv->load();
-
-spl_autoload_register(function ($class) {
-    $classFile = str_replace("\\", DIRECTORY_SEPARATOR, $class) . '.php';
-    $classPath = __DIR__ . '/app/' . $classFile;
-
-    if (file_exists($classPath)) {
-        require_once($classPath);
-    }
-});
-
-// Instantiate Database
-new Database();
-
-
-$route = new Route();
+// Include the route definitions
 require_once(__DIR__ . '/routes/web.php');
+
+// Handle the route
 $route->handle();
