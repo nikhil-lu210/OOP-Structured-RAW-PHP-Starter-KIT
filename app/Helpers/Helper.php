@@ -22,17 +22,6 @@ function dd($var): void {
 
 
 /**
- * Retrieve the value of an environment variable.
- *
- * @param string $value The name of the environment variable.
- * @return string|null The value of the environment variable if found, or null if not found.
- */
-function my_env(string $value): ?string {
-    return $_ENV[$value] ?? null;
-}
-
-
-/**
  * Get the URI associated with the given route name.
  *
  * @param  string  $name  The name of the route.

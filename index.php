@@ -1,5 +1,6 @@
 <?php
 
+use App\Config\Database;
 use Dotenv\Dotenv;
 use App\Services\Route;
 
@@ -20,6 +21,10 @@ spl_autoload_register(function ($class) {
         require_once($classPath);
     }
 });
+
+// Instantiate Database
+new Database();
+
 
 $route = new Route();
 require_once(__DIR__ . '/routes/web.php');
