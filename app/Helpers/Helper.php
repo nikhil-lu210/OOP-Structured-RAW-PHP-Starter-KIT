@@ -76,3 +76,25 @@ function mail_view(string $path, array $data = []): string {
 
     return $blade->make($path, $data)->render();
 }
+
+/**
+ * Redirect the user back to the previous page.
+ *
+ * @return void
+ */
+function redirect_back(): void
+{
+    Route::redirectBack();
+}
+
+/**
+ * Redirect the user to a named route.
+ *
+ * @param string $route_name The name of the route to redirect to.
+ * @return void
+ */
+function redirect_route(string $route_name): void
+{
+    Route::redirectRoute($route_name);
+}
+

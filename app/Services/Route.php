@@ -223,4 +223,44 @@ class Route
 
         self::$routeGroup = $previousGroup;
     }
+
+    /**
+     * Redirect to a named route.
+     *
+     * @param string $routeName The name of the route to redirect to
+     * @return void
+     */
+    public static function redirectRoute($routeName)
+    {
+        $routes = self::$routes;
+
+        foreach ($routes as $route) {
+            if ($route['name'] === $routeName) {
+                $redirectUrl = $route['uri'];
+                header("Location: $redirectUrl");
+                exit;
+            }
+        }
+
+        // If the named route is not found, you can redirect to a default page or display an error message
+        echo "Route not found: $routeName";
+        exit;
+    }
+
+    /**
+     * Redirect back to the previous page.
+     *
+     * @return void
+     */
+    public static function redirectBack()
+    {
+        $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+        if ($referer) {
+            header("Location: $referer");
+        } else {
+            // If the HTTP_REFERER is not set, you can redirect to a default page or display an error message
+            echo "Unable to determine previous page.";
+        }
+        exit;
+    }
 }

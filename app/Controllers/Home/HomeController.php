@@ -4,20 +4,12 @@ namespace App\Controllers\Home;
 use App\Config\Mail;
 use App\Services\Request;
 use App\Controllers\Controller;
-use App\Models\Post\Post;
-use App\Models\Subscriber\Subscriber;
 use App\Models\Website\Website;
 
 class HomeController extends Controller {
     public function index() {
-        Website::createTable();
-        Subscriber::createTable();
-        Post::createTable();
-        
-        dd('Table Created');
-        
-        // $website = Website::with(['subscribers', 'posts'])->whereId(1)->firstOrFail();
-        // dd($website);
+        $website = Website::with(['subscribers', 'posts'])->whereId(1)->firstOrFail();
+        dd($website);
 
         // return view('home.index', compact('website'));
         
