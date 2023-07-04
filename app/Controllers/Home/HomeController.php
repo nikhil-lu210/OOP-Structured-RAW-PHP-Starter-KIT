@@ -1,16 +1,26 @@
 <?php
 namespace App\Controllers\Home;
 
+use App\Config\Mail;
+use App\Services\Request;
 use App\Controllers\Controller;
 use App\Models\Website\Website;
-use App\Services\Request;
 
 class HomeController extends Controller {
     public function index() {
         $website = Website::with(['subscribers', 'posts'])->whereId(1)->firstOrFail();
+        // dd($website);
+
+        // return view('home.index', compact('website'));
+        
+        $recipient = 'nigel.si@staff-india.com';
+        $subject = 'Test Email';
+        $template = mail_view('emails.usermail', compact('website'));
+
+        Mail::sendEmail($recipient, $subject, $template);
+
+        
         dd($website);
-        $user = (object) ['name' => 'Nikhil'];
-        return view('home.index', compact('user'));
     }
 
     // public function show(int $id, string $slug) {

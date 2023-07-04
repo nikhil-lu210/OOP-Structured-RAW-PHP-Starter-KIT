@@ -7,7 +7,7 @@
     <title>Nikhil</title>
 </head>
 <body>
-    <h1>Hello {{ $user->name }}</h1>
+    <h1>Hello {{ $website->name }}</h1>
 
     <form action="{{ route('home.store') }}" method="POST">
         <label for="fname">First name:</label><br>

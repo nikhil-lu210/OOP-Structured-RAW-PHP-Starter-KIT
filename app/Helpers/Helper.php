@@ -58,3 +58,21 @@ function view(string $path, array $data = []): void {
 
     echo $blade->make($path, $data)->render();
 }
+
+
+/**
+ * Render a Blade template and output the result.
+ *
+ * @param string $path The path to the Blade template file.
+ * @param array $data The data to pass to the template (optional).
+ * @return string
+ */
+function mail_view(string $path, array $data = []): string {
+    // Define the path to the views directory and the cache directory
+    $view = __DIR__ . '/../../resources/views';
+    $cache = __DIR__ . '/../../bootstrap/cache';
+
+    $blade = new Blade($view, $cache);
+
+    return $blade->make($path, $data)->render();
+}
