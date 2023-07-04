@@ -1,6 +1,5 @@
 /.phpunit.cache
 /vendor
-.env
 .env.backup
 .env.production
 /.idea
