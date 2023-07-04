@@ -1,5 +1,5 @@
 
-# How to send mail?
+# Sending Email
 
 > **use App\Config\Mail;**
 

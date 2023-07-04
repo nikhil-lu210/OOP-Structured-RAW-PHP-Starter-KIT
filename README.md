@@ -28,4 +28,5 @@
 
   
 
+-  **[Model & Migrations](project_files/documentation/MODEL_MIGRATION.md)**
 -  **[Sending Email](project_files/documentation/EMAILDOC.md)**
