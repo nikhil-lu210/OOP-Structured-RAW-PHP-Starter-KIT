@@ -7,4 +7,4 @@
     $subject =  'Email Subject Here';
     $template =  mail_view('emails.usermail', compact('website'));
         
-    Mail::sendEmail($recipient, $subject, $template);
+    Mail::send($recipient, $subject, $template);

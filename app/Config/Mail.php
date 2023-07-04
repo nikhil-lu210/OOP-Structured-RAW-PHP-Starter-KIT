@@ -52,7 +52,7 @@ class Mail {
      * @return void
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public static function sendEmail(string $recipient, string $subject, string $template): void {
+    public static function send(string $recipient, string $subject, string $template): void {
         try {
             self::$mail = new PHPMailer(true); // Pass "true" to enable exceptions
             self::setUp();
