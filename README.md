@@ -9,3 +9,8 @@
  2. **Run command:** `composer install`
  3. **Copy .env file:** `cp .env.example .env`
  4. **Run in localhost using this command:** `php -S localhost:8000`
+
+
+## Docmentation Links
+
+ - [Sending Email](project_files/documentation/EMAILDOC.md)

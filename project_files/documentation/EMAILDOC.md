@@ -1,11 +1,10 @@
-# OOP Structured RAW PHP (Starter KIT)
 
-## Cloning the project
-`git clone https://github.com/nikhil-lu210/OOP-Structured-RAW-PHP-Starter-KIT.git`
+# How to send mail?
 
-## Installation
+> **use App\Config\Mail;**
 
- 1. **Go to folder location and run:** `cd /OOP-Structured-RAW-PHP-Starter-KIT`
- 2. **Run command:** `composer install`
- 3. **Copy .env file:** `cp .env.example .env`
- 4. **Run in localhost using this command:** `php -S localhost:8000`
+    $recipient =  'receipt@mail.com';
+    $subject =  'Email Subject Here';
+    $template =  mail_view('emails.usermail', compact('website'));
+        
+    Mail::sendEmail($recipient, $subject, $template);
