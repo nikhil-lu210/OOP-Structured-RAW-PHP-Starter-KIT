@@ -1,9 +1,10 @@
 <?php
 
-use App\Controllers\Home\HomeController;
 use App\Services\Route;
+use App\Controllers\Home\HomeController;
+use App\Controllers\Migrations\MigrationController;
 
-// Route::get('/', HomeController::class, 'index')->name('home.index');
+Route::get('/migration/create', MigrationController::class, 'create')->name('migration.create');
 // Route::get('/show/{id}/{slug}', HomeController::class, 'show')->name('home.show');
 
 Route::prefix('')

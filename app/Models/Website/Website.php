@@ -1,21 +1,12 @@
 <?php
 namespace App\Models\Website;
 
-use App\Models\Post\Post;
-use App\Models\Subscriber\Subscriber;
+use App\migrations\WebsiteTable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Website\Traits\WebsiteRelations;
 
 class Website extends Model {
+    use WebsiteTable, WebsiteRelations;
+
     protected $table = 'websites';
-
-    public function subscribers(): HasMany 
-    {
-        return $this->hasMany(Subscriber::class);
-    }
-
-    public function posts(): HasMany 
-    {
-        return $this->hasMany(Post::class);
-    }
 }

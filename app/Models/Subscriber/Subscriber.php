@@ -1,15 +1,13 @@
 <?php
 namespace App\Models\Subscriber;
 
-use App\Models\Website\Website;
+use App\Migrations\SubscriberTable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Subscriber\Traits\SubscriberRelations;
 
 class Subscriber extends Model {
-    protected $table = 'subscribers';
 
-    public function website(): BelongsTo 
-    {
-        return $this->belongsTo(Website::class);
-    }
+    use SubscriberTable, SubscriberRelations;
+
+    protected $table = 'subscribers';
 }

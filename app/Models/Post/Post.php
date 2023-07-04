@@ -1,15 +1,12 @@
 <?php
 namespace App\Models\Post;
 
-use App\Models\Website\Website;
+use App\Migrations\PostTable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Post\Traits\PostRelations;
 
 class Post extends Model {
-    protected $table = 'posts';
+    use PostTable, PostRelations;
 
-    public function website(): BelongsTo 
-    {
-        return $this->belongsTo(Website::class);
-    }
+    protected $table = 'posts';
 }
