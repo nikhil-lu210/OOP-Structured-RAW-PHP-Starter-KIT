@@ -13,4 +13,4 @@
 
 ## Docmentation Links
 
- - [Sending Email](project_files/documentation/EMAILDOC.md)
+ - [Sending Email](project_files/documentation/EMAILDOC.md){:target="_blank"}
