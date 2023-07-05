@@ -8,6 +8,11 @@ use App\Services\Route;
 // Start the session if not already started
 if (!isset($_SESSION)) {
     session_start();
+
+    // Generate a CSRF token if it doesn't exist in the session
+    if (!isset($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
 }
 
 // Load the autoloader for Composer dependencies

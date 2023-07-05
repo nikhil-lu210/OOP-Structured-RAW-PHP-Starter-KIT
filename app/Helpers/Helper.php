@@ -56,7 +56,21 @@ function view(string $path, array $data = []): void {
 
     $blade = new Blade($view, $cache);
 
+    // Define the @csrf directive
+    $blade->compiler()->directive('csrf', function () {
+        return '<?php echo "<input type=\"hidden\" name=\"_token\" value=\"". $_SESSION[\'csrf_token\'] ."\">"; ?>';
+    });
+
     echo $blade->make($path, $data)->render();
+}
+/**
+ * Generate a CSRF token field.
+ *
+ * @return string The CSRF token field HTML.
+ */
+function csrf_field(): string
+{
+    return '<input type="hidden" name="_token" value="' . $_SESSION['csrf_token'] . '">';
 }
 
 
@@ -97,8 +111,6 @@ function redirect_route(string $route_name): void
 {
     Route::redirectRoute($route_name);
 }
-
-
 
 
 /**
