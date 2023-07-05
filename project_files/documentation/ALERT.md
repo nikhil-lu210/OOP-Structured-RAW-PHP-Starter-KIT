@@ -21,4 +21,4 @@ use App\Services\Alert;
 Alert::success('Your Message Here');
 ```
 
-[Alert Types are: success, error/danger, info, warning]
+> **Alert Types:** success, error/danger, info, warning
